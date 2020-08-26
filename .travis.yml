@@ -12,7 +12,9 @@ script:
 
 after_script:
   - git checkout -b gh-pages
-  - mv -f _book/* ./
+  - shopt -s extglob
+  - rm -fr !(_book)
+  - mv -f _book/* ../notes
   - git add .
   - git commit -m "Updated By Travis-CI With Build $(basename $TRAVIS_REPO_SLUG):$TRAVIS_BUILD_NUMBER For Github Pages"
   - git push --force --quiet "https://${GITHUB_TOKEN}@${REF}"
