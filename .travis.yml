@@ -1,0 +1,27 @@
+language: node_js
+node_js:
+  - "10"
+cache: npm
+
+install:
+  - npm install -g gitbook-cli
+  - gitbook install
+
+script:
+  - gitbook build
+
+after_script:
+  - git checkout -b gh-pages
+  - mv -f _book/* ./
+  - git add .
+  - git commit -m "Updated By Travis-CI With Build $(basename $TRAVIS_REPO_SLUG):$TRAVIS_BUILD_NUMBER For Github Pages"
+  - git push --force --quiet "https://${GITHUB_TOKEN}@${REF}"
+
+branches:
+  only:
+    - master
+
+env:
+  global:
+    - REF=github.com/dyingtime/notes.git # 设置 github 地址
+    - secure: "Xlt9gk8XpPGRVnyZ/RatPAo9WWPcXtDVdNE1UKUOYLH8LbJUp28AF0oT0W3RgANBkiecr6whnwSulz4VWGpVIgar9nhrUSRruIOaaZ0olqSmrYYoYKbtN0RN7RX0AsVnYHfFa+tyOroxbuuLWuBCOYc99xEDPTM17tQ+Kf7TzEf9trPAvseORZZKvq7BQJFOAtVJcTkNSt8ysSx0HHovxnPXp/7b2KxBoGipRVJ+sBRji+2t7QENzPn+58oTwaKkaIMVrpIMfPu3Rmg3z95hJHrGWq0PNPdjfJmDCYUwQif6ItG506u6NXNP/2dPvsGks58e228R/04/CZE9eHPSfJuqhNK4GGi80LqEsY6beRsmIqNNetzcAx0E81QHxwhPuQjdXbQ/2lsQei1kLmB8T/NAEgF+1vvUlTjpFsPqkCHmZK0mmIhWo1EyFGCfyHzVLWnicXAyAldTlJNSqvhbwEXxYn05D+zG5E49+3NT1hrjdvreJINw9CMa0qLxZs8jHtBmSc7y/bIhttjw7/EQYKrotK1P9w4mb02aDbpHQtY6Cmj1VzlyQnvDNTU+JAhldhVxbwb7oaFtnh+p0bWqS7h5Wu+m5bJWSLwBEXiZwUuLueBX7zXQ1D69js5Kbd7tssB/R8Ma79wDRhCSuGRLyAe9v54ruOMZKJnTkh7X+Kw="
