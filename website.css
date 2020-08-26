@@ -22,3 +22,11 @@
 code:not([class^=lang]) {
     color: hotpink !important;
 }
+
+.book-summary ul.summary li ul {
+    padding-left: 0px;
+}
+
+.book .book-summary ul.summary li a, .book .book-summary ul.summary li span {
+    padding-left: 15px;
+}
