@@ -1,8 +1,10 @@
-### PIP
+## PIP
 
- `pip`是`Python`的软件包安装程序. 您可以使用`pip`从`Python`软件包索引和其他索引安装软件包.
+---
 
-##### 1.快速开始
+`pip`是`Python`的软件包安装程序. 您可以使用`pip`从`Python`软件包索引和其他索引安装软件包.
+
+#### 1.快速开始
 
 ```shell
 pip install SomePackage              #最新帮本
@@ -17,7 +19,7 @@ pip list                             #列出已安装的包
 pip list --outdated                  #列出可升级的包
 ```
 
-##### 2.下载
+#### 2.下载
 
   ```shell
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py #Python 2.7.9+/3.4+ 自带 pip 工具
@@ -36,7 +38,7 @@ python -m pip install -U pip    #on window
     
     - `--no-wheel` 不安装 `wheel`
 
-#### 3.用户手册
+### 3.用户手册
 
   - 1.临时更改 - 使用`-i` 参数
 
