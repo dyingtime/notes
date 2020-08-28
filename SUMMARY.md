@@ -1,8 +1,20 @@
 # Summary
 
 * [Introduction](README.md)
-* [spring-cloud](spring-cloud/README.md)
-  * [spring-cloud-bus-amqp](spring-cloud/spring-cloud-bus-amqp/README.md)
-    * [refresh](spring-cloud/spring-cloud-bus-amqp/refresh.md)
-* [python](python/README.md)
-  * [pip](python/pip.md)
+- spring-cloud
+  - spring-cloud-bus-amqp
+    * [refresh](spring-cloud\spring-cloud-bus-amqp\refresh.md)
+- python
+  * [pip](python\pip.md)
+- kubernetes 
+  * api
+    * [api](kubernetes\api\api.md)
+    * [job-v1-batch](kubernetes\api\job-v1-batch.md)
+  - tasks
+    - configure-pod-container
+      * [pull-image-private-registry](kubernetes\tasks\configure-pod-container\pull-image-private-registry.md)
+      * [quality-service-pod](kubernetes\tasks\configure-pod-container\quality-service-pod.md)
+    - inject-data-to-application
+      * [podpreset](kubernetes\tasks\inject-data-into-applications\podpreset.md)
+    - tools
+      * [install](kubernetes\tasks\tools\install-kubeadm.md)
