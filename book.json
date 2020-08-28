@@ -9,7 +9,8 @@
         "anchors",
         "expandable-chapters",
         "chapter-fold",
-        "hide-element"
+        "hide-element",
+        "splitter"
     ],
     "pluginsConfig": {
         "fontsettings": {
