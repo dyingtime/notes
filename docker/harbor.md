@@ -1,4 +1,4 @@
-# Harbor 安装过程
+## Harbor 安装过程
 
 ### 安装 `docker-compose`
 
