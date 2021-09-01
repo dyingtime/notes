@@ -5,6 +5,7 @@
   - spring-cloud-bus-amqp
     * [refresh](spring-cloud\spring-cloud-bus-amqp\refresh.md)
 - python
+  
   * [pip](python\pip.md)
 - kubernetes 
   * api
@@ -19,4 +20,9 @@
     - tools
       * [install](kubernetes\tasks\tools\install-kubeadm.md)
 - docker
+  
   * [harbor-install](docker\harbor.md)
+- others
+  
+  * [stf-install](others\stf.md)
+
