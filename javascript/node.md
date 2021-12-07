@@ -25,19 +25,22 @@ nvm ls-remote       # list available versionsss
 
 ### config registry
 
+- set registry by command 
+
 ```shell
 npm config set registry http://registry.npmjs.org # config registry global
 ```
 
-`.npmrc` 
+- `.npmrc` file in current project directory 
 
 ```ini
 registry = https://registry.npm.taobao.org
 ```
 
-### install git package
+### Usage
 
 ```shell
+# install git package
 npm install git+https://git@git.hub/<username>/<repository>.git[#<branch>]
 ```
 
