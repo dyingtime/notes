@@ -22,3 +22,7 @@ npx tsc index.ts
 npx tsc -w
 ```
 
+## Run in WebStorm
+ - Node parameters: `-r ts-node/register`
+ - JavaScript file: `$FilePathRelativeToProjectRoot$`
+ - Enviroment variables: `TS_NODE_FILES=true`
