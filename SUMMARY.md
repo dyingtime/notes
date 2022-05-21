@@ -1,17 +1,23 @@
 # Summary
 
 * [Introduction](README.md)
+
 - algorithm
+
   * [leetcode](algorithm/leetcode.md)
 - linux
+
   * [iptables](linux/iptables.md)
 - spring-cloud
+
   - spring-cloud-bus-amqp
     * [refresh](spring-cloud/spring-cloud-bus-amqp/refresh.md)
-- kubernetes 
+- kubernetes
+
   * api
     * [api](kubernetes/api/api.md)
     * [job-v1-batch](kubernetes/api/job-v1-batch.md)
+
   - tasks
     - configure-pod-container
       * [pull-image-private-registry](kubernetes/tasks/configure-pod-container/pull-image-private-registry.md)
@@ -21,13 +27,19 @@
     - tools
       * [install](kubernetes/tasks/tools/install-kubeadm.md)
 - docker
+
   * [harbor-install](docker/harbor.md)
 - python
+
   * [pip](python/pip.md)
 - javascript
+
   * [node](javascript/node.md)
   * [typescript](javascript/typescript.md)
 - jenkins
-  * [pipline](jenkins/pipline.md)
+
+  * [pipline](jenkins/pipeline.md)
 - others
+
   * [stf-install](others/stf.md)
+  * [gpg](others/gpg.md)
