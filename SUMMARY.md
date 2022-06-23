@@ -8,6 +8,7 @@
 - linux
   * [tcp](linux/tcp.md)
   * [iptables](linux/iptables.md)
+  * [sh](linux/sh.md)
 - spring-cloud
 
   - spring-cloud-bus-amqp
