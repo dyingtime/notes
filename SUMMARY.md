@@ -44,3 +44,4 @@
 
   * [stf-install](others/stf.md)
   * [gpg](others/gpg.md)
+  * [pinpoint](others/pinpoint.md)
