@@ -33,6 +33,7 @@
   * [tcp](linux/tcp.md)
   * [iptables](linux/iptables.md)
   * [sh](linux/sh.md)
+  * [multi version controller](linux/update-alternatives.md)
 - others
   * [stf-install](others/stf.md)
   * [gpg](others/gpg.md)
