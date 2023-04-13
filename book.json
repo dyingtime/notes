@@ -1,0 +1,32 @@
+{
+    "title": "dyingtime",
+    "styles": {
+        "website": "website.css"
+    },
+    "plugins": [
+        "code",
+        "prism",
+        "anchors",
+        "expandable-chapters",
+        "chapter-fold",
+        "hide-element",
+        "splitter"
+    ],
+    "pluginsConfig": {
+        "fontsettings": {
+            "theme": "night",
+            "family": "serif",
+            "size": 2
+        },
+        "prism": {
+            "css": [
+                "prismjs/themes/prism-okaidia.css"
+            ]
+        },
+        "hide-element": {
+            "elements": [
+                ".gitbook-link"
+            ]
+        }
+    }
+}
