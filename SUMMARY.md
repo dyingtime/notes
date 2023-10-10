@@ -27,8 +27,9 @@
 - javascript
   * [node](javascript/node.md)
   * [typescript](javascript/typescript.md)
-- jenkins
-  * [pipline](jenkins/pipeline.md)
+- pipeline
+  * [gitlab](pipeline/gitlab.md) 
+  * [jenkins](pipeline/jenkins.md)
 - linux
   * [tcp](linux/tcp.md)
   * [iptables](linux/iptables.md)

@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>pipline · dyingtime</title>
+        <title>gitlab · dyingtime</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -72,6 +72,8 @@
     <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
+    
+    <link rel="next" href="jenkins.html" />
     
     
 
@@ -535,7 +537,7 @@
                 <span>
             
                     
-                    jenkins
+                    pipeline
             
                 </span>
             
@@ -544,12 +546,25 @@
             <ul class="articles">
                 
     
-        <li class="chapter active" data-level="1.9.1" data-path="pipeline.html">
+        <li class="chapter active" data-level="1.9.1" data-path="gitlab.html">
             
-                <a href="pipeline.html">
+                <a href="gitlab.html">
             
                     
-                    pipline
+                    gitlab
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="jenkins.html">
+            
+                <a href="jenkins.html">
+            
+                    
+                    jenkins
             
                 </a>
             
@@ -721,7 +736,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >pipline</a>
+        <a href=".." >gitlab</a>
     </h1>
 </div>
 
@@ -737,106 +752,35 @@
                                 <section class="normal markdown-section">
                                 
                                 <h2 id="jenkins-pipeline"><a name="jenkins-pipeline" class="plugin-anchor" href="#jenkins-pipeline"><i class="fa fa-link" aria-hidden="true"></i></a>jenkins pipeline</h2>
-<h3 id="plugins"><a name="plugins" class="plugin-anchor" href="#plugins"><i class="fa fa-link" aria-hidden="true"></i></a>plugins</h3>
-<ul>
-<li><a href="https://plugins.jenkins.io/ansible" target="_blank">Ansible</a></li>
-<li><a href="https://plugins.jenkins.io/pyenv-pipeline" target="_blank">Pyenv Pipeline</a></li>
-<li><a href="https://plugins.jenkins.io/credentials" target="_blank">Credentials</a></li>
-<li><a href="https://plugins.jenkins.io/nodejs" target="_blank">NodeJS</a></li>
-<li><a href="https://plugins.jenkins.io/ssh-agent" target="_blank">SSH Agent</a></li>
-<li><a href="https://plugins.jenkins.io/ssh-credentials" target="_blank">SSH Credentials</a></li>
-<li><a href="https://plugins.jenkins.io/htmlpublisher" target="_blank">HTML Publisher</a></li>
-</ul>
-<pre class="language-"><code>pipeline {  
-    agent any
+<h3 id="how-to-pass-variable-to-downstream-jobs"><a name="how-to-pass-variable-to-downstream-jobs" class="plugin-anchor" href="#how-to-pass-variable-to-downstream-jobs"><i class="fa fa-link" aria-hidden="true"></i></a>how to pass variable to downstream jobs</h3>
+<pre class="language-"><code class="lang-yaml"><span class="token key atrule">stages</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> stage1
+  <span class="token punctuation">-</span> stage2
 
-    tools {
-        nodejs &quot;NodeJS 16.15.0&quot;
-    }
+<span class="token key atrule">stage1</span><span class="token punctuation">:</span>
+  <span class="token key atrule">stage</span><span class="token punctuation">:</span> stage1
+  <span class="token key atrule">image</span><span class="token punctuation">:</span> ubuntu<span class="token punctuation">:</span>latest
+  <span class="token key atrule">script</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> export TEST_ENV=123
+    <span class="token punctuation">-</span> echo &quot;TEST_ENV=TEST_ENV&quot; <span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span> build.env
+  <span class="token key atrule">artifacts</span><span class="token punctuation">:</span>
+    <span class="token key atrule">reports</span><span class="token punctuation">:</span>
+      <span class="token key atrule">dotenv</span><span class="token punctuation">:</span> build.env
 
-    parameters {
-        string(name: &apos;test_script_path&apos;, defaultValue: &apos;./src/test-scripts/demo.ts&apos;)
-        string(name: &apos;ec2_tag&apos;, defaultValue: &apos;webinar_nodejs&apos;)
-    }
-
-    environment {
-        AWS_ACCESS_KEY_ID = credentials(&apos;aws-access-key-id&apos;)
-        AWS_SECRET_ACCESS_KEY= credentials(&apos;aws-secret-access-key&apos;)
-    }
-
-    stages {
-        stage(&apos;install ansible&apos;) {
-            steps {
-                withPythonEnv(&apos;python3&apos;) {
-                    sh &apos;pip install --upgrade pip&apos;
-                    sh &apos;pip install ansible jupyterlab nbconvert pandas plotly&apos;
-                }
-            }
-        }
-
-        stage(&apos;git checkout&apos;) {
-            steps {
-                git branch: &apos;dev&apos;, credentialsId: &apos;git-access-key&apos;, url: &apos;https://github.com/dyingtime/notes.git&apos;
-            }
-        }
-
-        stage(&apos;ansible start instance&apos;) {
-            steps {
-                sshagent(credentials: [&apos;aws-ssh-private-key&apos;]) {
-                    withPythonEnv(&apos;python3&apos;) {
-                        ansiblePlaybook (
-                            credentialsId: &apos;aws-ssh-private-key&apos;,
-                            playbook: &apos;ansible/start_instance.yml&apos;,
-                            extras: &apos;-e action=start -e tag=${ec2_tag}&apos;
-                        )
-                    }
-
-                }
-            }
-        }
-
-        stage(&apos;install ts-node&apos;) {
-            steps {
-                sh &apos;npm install ts-node&apos;
-            }
-        }
-
-        stage(&apos;execute test&apos;) {
-            steps {
-                withPythonEnv(&apos;python3&apos;) {
-                    sh &apos;NODE_PATH=./script/test-scripts npx ts-node --files ${test_script_path}&apos;
-                }
-            }
-        }
-
-        stage(&apos;publish report&apos;) {
-            steps {
-                publishHTML(
-                    target : [
-                        alwaysLinkToLastBuild: true,
-                        keepAll: true,
-                        reportDir: &apos;report&apos;,
-                        reportFiles: &apos;*.html&apos;,
-                        reportName: &apos;test-report&apos;
-                    ]
-                )
-            }
-        }
-    }
-
-    post {
-        cleanup {
-            withPythonEnv(&apos;python3&apos;) {
-                ansiblePlaybook (
-                    playbook: &apos;ansible/stop_instance.yml&apos;,
-                    inventory: &apos;ansible/aws_ec2.yml&apos;, 
-                    extras: &apos;-e tag=${ec2_tag}&apos;
-                )
-            }
-        }
-    }
-}
+<span class="token key atrule">stage2</span><span class="token punctuation">:</span>
+  <span class="token key atrule">stage</span><span class="token punctuation">:</span> stage2
+  <span class="token key atrule">trigger</span><span class="token punctuation">:</span>
+    <span class="token key atrule">forward</span><span class="token punctuation">:</span>
+      <span class="token key atrule">pipeline_variables</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+    <span class="token key atrule">project</span><span class="token punctuation">:</span> <span class="token string">&apos;downstream&apos;</span>
+    <span class="token key atrule">branch</span><span class="token punctuation">:</span> <span class="token string">&apos;main&apos;</span>
+    <span class="token key atrule">strategy</span><span class="token punctuation">:</span> depend
+  <span class="token key atrule">variables</span><span class="token punctuation">:</span>
+    <span class="token key atrule">TEST_ENV</span><span class="token punctuation">:</span> $TEST_ENV
+  <span class="token key atrule">rules</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">if</span><span class="token punctuation">:</span> $BACKWARD_COMPATIBILITY == &quot;true&quot;
 </code></pre>
+
                                 
                                 </section>
                             
@@ -864,6 +808,10 @@
             
                 
                 
+                <a href="jenkins.html" class="navigation navigation-next navigation-unique" aria-label="Next page: jenkins">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
             
         
     </div>
@@ -871,7 +819,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"pipline","level":"1.9.1","depth":2,"next":{"title":"linux","level":"1.10","depth":1,"ref":"","articles":[{"title":"tcp","level":"1.10.1","depth":2,"path":"linux/tcp.md","ref":"linux/tcp.md","articles":[]},{"title":"iptables","level":"1.10.2","depth":2,"path":"linux/iptables.md","ref":"linux/iptables.md","articles":[]},{"title":"sh","level":"1.10.3","depth":2,"path":"linux/sh.md","ref":"linux/sh.md","articles":[]},{"title":"multi version controller","level":"1.10.4","depth":2,"path":"linux/update-alternatives.md","ref":"linux/update-alternatives.md","articles":[]}]},"previous":{"title":"jenkins","level":"1.9","depth":1,"ref":"","articles":[{"title":"pipline","level":"1.9.1","depth":2,"path":"jenkins/pipeline.md","ref":"jenkins/pipeline.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["code","prism","anchors","expandable-chapters","chapter-fold","hide-element","splitter"],"styles":{"website":"website.css"},"pluginsConfig":{"chapter-fold":{},"prism":{"css":["prismjs/themes/prism-okaidia.css"]},"splitter":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"night","family":"serif","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"expandable-chapters":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"dyingtime","gitbook":"*"},"file":{"path":"jenkins/pipeline.md","mtime":"2023-04-13T05:25:33.205Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-04-13T05:26:13.047Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"gitlab","level":"1.9.1","depth":2,"next":{"title":"jenkins","level":"1.9.2","depth":2,"path":"pipeline/jenkins.md","ref":"pipeline/jenkins.md","articles":[]},"previous":{"title":"pipeline","level":"1.9","depth":1,"ref":"","articles":[{"title":"gitlab","level":"1.9.1","depth":2,"path":"pipeline/gitlab.md","ref":"pipeline/gitlab.md","articles":[]},{"title":"jenkins","level":"1.9.2","depth":2,"path":"pipeline/jenkins.md","ref":"pipeline/jenkins.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["code","prism","anchors","expandable-chapters","chapter-fold","hide-element","splitter"],"styles":{"website":"website.css"},"pluginsConfig":{"chapter-fold":{},"prism":{"css":["prismjs/themes/prism-okaidia.css"]},"splitter":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"night","family":"serif","size":2},"highlight":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"expandable-chapters":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"dyingtime","gitbook":"*"},"file":{"path":"pipeline/gitlab.md","mtime":"2023-10-10T08:28:11.952Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2023-10-10T08:28:52.804Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
