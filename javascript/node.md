@@ -18,7 +18,7 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 ```shell
 nvm install node    # "node" is an alias for the latest version
 nvm install 14.7.0  # or 16.3.0, 12.22.1, etc
-nvm ls-remote       # list available versionsss
+nvm ls-remote       # list available version
 ```
 
 ## npm
