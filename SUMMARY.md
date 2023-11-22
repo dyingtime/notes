@@ -31,6 +31,7 @@
   * [gitlab](pipeline/gitlab.md) 
   * [jenkins](pipeline/jenkins.md)
 - linux
+  * [tools](linux/tools.md)
   * [tcp](linux/tcp.md)
   * [iptables](linux/iptables.md)
   * [sh](linux/sh.md)

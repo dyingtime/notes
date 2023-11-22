@@ -1,3 +1,10 @@
+## find
+
+```bash
+# find files by name
+find . -type f -name "*.js" ! -path "./node_modules/*" ! -name "*ava*"
+```
+
 ## jq
 
 ### install
